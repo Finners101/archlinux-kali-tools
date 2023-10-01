@@ -1,14 +1,20 @@
 # archlinux-kali-tools
 > Generate an install script for packages listed on kali.org/tools 
-> which are available in the Arch Linux official repositories. 
+> which are available in the Arch Linux official repositories 
 
 ## Overview
 My goal here was to enable easy access to some common security tooling without 
-needing to boot into a dedicated pentesting distribution. Most similar scripts 
-I saw added the BlackArch repository (which I didn't want) and then just 
-installed a static list of packages through `pacman`. Current availability is 
-162 out of 677 tools, but many of the remaining tools are available through 
-the AUR. 
+needing to boot into a dedicated pentesting distribution, and Arch Linux is my 
+daily driver. Most similar scripts I saw added the BlackArch repository (which 
+I didn't want) and then just installed a static list of packages through 
+`pacman`. 
+
+This script pulls down kali.org/tools/pages.json and queries the Arch Linux 
+package repositories for matching packages.
+
+The current availability is 162 out of 677 packages, but many of the 
+remaining tools are available through the AUR. Additionally, the script is 
+naively just looking for exact matches -- I'm sure it's missing a few.
 
 ## Usage
 The only dependency is [requests](https://github.com/psf/requests). Install 
@@ -16,7 +22,7 @@ that, then run `python arch_kali_tools.py`. This will generate (3) files -
 `available`, `missing`, and `install.sh`. Execute `install.sh` to install 
 available packages through `pacman`. 
 
-Future runs will only query https://archlinux.org/packages/search/json/ if 
+Future runs will only query https://archlinux.org/packages/search/json if 
 new packages are added to https://www.kali.org/tools (assuming you keep the
 `available` and `missing` files intact).
 
@@ -49,9 +55,9 @@ $> python arch_kali_tools.py
 [-] arping                         (19 of 677)
 [+] arpwatch                       (20 of 677)
 ```
-* [+] indicates an available package
-* [-] is missing
-* [i] is explicitly ignored
+* `[+]` indicates an available package
+* `[-]` is missing
+* `[i]` is explicitly ignored
 
 ## References
 - https://wiki.archlinux.org/title/Official_repositories_web_interface
